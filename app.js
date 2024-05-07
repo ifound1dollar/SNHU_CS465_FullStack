@@ -4,9 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-//Modify to include app_server directory AND add travelRouter
+//Modify to include app_server directory AND add new routers
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
+var aboutRouter = require('./app_server/routes/about');
+var contactRouter = require('./app_server/routes/contact');
+var mealsRouter = require('./app_server/routes/meals');
+var newsRouter = require('./app_server/routes/news');
+var roomsRouter = require('./app_server/routes/rooms');
 var travelRouter = require('./app_server/routes/travel');
 const handlebars = require('hbs');
 
@@ -24,9 +29,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Use new travel router
+//Use new routers
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/about', aboutRouter);
+app.use('/contact', contactRouter);
+app.use('/meals', mealsRouter);
+app.use('/news', newsRouter);
+app.use('/rooms', roomsRouter);
 app.use('/travel', travelRouter);
 
 // catch 404 and forward to error handler
