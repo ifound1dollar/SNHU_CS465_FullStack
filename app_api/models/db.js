@@ -65,5 +65,5 @@ process.on('SIGTERM', () => {
 connect();
 
 //Once database is connected, import Mongoose schema defined in 'travlr.js' module, then export mongoose.
-require('./travlr');
+require('./tripsModel');
 module.exports = mongoose;

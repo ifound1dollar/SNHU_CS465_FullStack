@@ -1,20 +1,26 @@
 [
     {
+        "code": "01-WTBOTB",
         "name": "What to bring on the beach?"
     },
     {
+        "code": "02-PFA",
         "name": "Planning Fun Activities"
     },
     {
+        "code": "03-DC",
         "name": "Diving Checklist"
     },
     {
+        "code": "04-FA",
         "name": "First Aid"
     },
     {
+        "code": "05-HTBASC",
         "name": "How to build a sand castle?"
     },
     {
+        "code": "06-TT",
         "name": "Tanning Tips"
     }
 ]

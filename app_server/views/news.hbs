@@ -17,26 +17,26 @@
 							<div class="sidebar">
 								<h3>Latest News</h3>
 								<ul>
-									{{#each newsJson}}
+									{{#each news}}
 									<li>
-										<a href="/news">{{this.articleName}}</a>
+										<a href="/api/news/{{this.code}}">{{this.name}}</a>
 									</li>
 									{{/each}}
 								</ul>
 								<h3>Vaction Tips</h3>
 								<ul>
-									{{#each tipsJson}}
+									{{#each tips}}
 									<li>
-										<a href="/news">{{this.name}}</a>
+										<a href="/api/tips/{{this.code}}">{{this.name}}</a>
 									</li>
 									{{/each}}
 								</ul>
 							</div>
 							<div>
 								<h1>News</h1>
-								{{#with newsJson.[0]}}
+								{{#with news.[0]}}
 								<img src={{this.image}} alt="Img">
-								<h2>{{this.articleName}}</h2>
+								<h2>{{this.name}}</h2>
 								<span class="time">{{this.date}}<br> by: {{this.author}}</span>
 								{{{this.description}}}
 								{{/with}}

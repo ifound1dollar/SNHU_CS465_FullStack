@@ -26,11 +26,9 @@
 								<ul>
 									{{#each news}}
 									<li>
-										<h4><a href="/news">{{this.articleName}}</a></h4>
+										<h4><a href="/news">{{this.name}}</a></h4>
 										<span>{{this.date}}</span>
-										<p>
-											{{this.description}}
-										</p>
+										{{{this.description}}}
 									</li>
 									{{/each}}
 								</ul>
