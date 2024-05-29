@@ -36,7 +36,58 @@ const tripsFindByCode = async(req, res) => {
     }
 };
 
+//POST: /trips - Adds a new Trip
+//Regardless of outcome, response must include HTML status code and HTML message to the requesting client.
+const tripsAddTrip = async(req, res) => {
+    const q = await Model.create({
+        code: req.body.code,
+        name: req.body.name,
+        length: req.body.length,
+        start: req.body.start,
+        resort: req.body.resort,
+        perPerson: req.body.perPerson,
+        image: req.body.image,
+        description: req.body.description
+    })
+    .then((data) => {
+        res.send(data);
+    })
+    .catch((err) => {
+        res.send(err);
+    });
+
+    //console.log(q);
+}
+
+//PUT: /trips/:tripCode - Updates an existing Trip
+//Regardless of outcome, response must include HTML status code and HTML message to the requesting client.
+const tripsUpdateTrip = async(req, res) => {
+    const q = await Model.findOneAndUpdate(
+        { 'code': req.params.tripCode },
+        {
+            code: req.body.code,
+            name: req.body.name,
+            length: req.body.length,
+            start: req.body.start,
+            resort: req.body.resort,
+            perPerson: req.body.perPerson,
+            image: req.body.image,
+            description: req.body.description
+        }
+    ).exec();
+
+    if (!q) {
+        //If false, database returned no data.
+        return res.status(400).json(err);
+    } else {
+        //Else return resulting updated Trip.
+        return res.status(201).json(q);
+    }
+}
+
 module.exports = {
     tripsList,
-    tripsFindByCode
+    tripsFindByCode,
+    tripsAddTrip,
+    tripsUpdateTrip
 }

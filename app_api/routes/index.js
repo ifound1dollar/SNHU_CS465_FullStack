@@ -11,9 +11,15 @@ const mealsController = require('../controllers/meals');
 const roomsController = require('../controllers/rooms');
 
 //Define route for /trips endpoint.
-router.route('/trips').get(tripsController.tripsList);   //This GET method routes tripsList
+router
+    .route('/trips')
+    .get(tripsController.tripsList)         //This GET method routes tripsList
+    .post(tripsController.tripsAddTrip);    //This POST method adds a Trip
 //Define route for /trips/:tripCode endpoint.
-router.route('/trips/:tripCode').get(tripsController.tripsFindByCode);  //This GET method routes tripsFindByCode
+router
+    .route('/trips/:tripCode')
+    .get(tripsController.tripsFindByCode)   //This GET method routes tripsFindByCode
+    .put(tripsController.tripsUpdateTrip);  //This PUT method updates a specified Trip
 
 //Define route for /news endpoint.
 router.route('/news').get(newsController.newsList);
