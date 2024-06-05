@@ -1,8 +1,11 @@
+require('dotenv').config();           //Require .env for environment variables
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport');   //Bring in passport
 
 //Modify to include app_server directory AND add new routers
 var indexRouter = require('./app_server/routes/index');
@@ -14,12 +17,15 @@ var newsRouter = require('./app_server/routes/news');
 var roomsRouter = require('./app_server/routes/rooms');
 var travelRouter = require('./app_server/routes/travel');
 
+//BEFORE API ROUTER, require user schema so it loads.
+require('./app_api/models/user');
 var apiRouter = require('./app_api/routes/index');
 
 const handlebars = require('hbs');
 
-//Bring in database.
-require('./app_api/models/db')
+//Bring in database and passport config.
+require('./app_api/models/db');
+require('./app_api/config/passport');
 
 var app = express();
 
@@ -34,13 +40,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());     //Use and initialize passport
 
 //Enable CORS.
 app.use('/api', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   next();
+});
+
+//Catch unauthorized error and send 401 status.
+app.use((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).json({ 'message': err.name + ': ' + err.message });
+  }
 });
 
 //Use new routers INCLUDING api router.
